@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '35.227.155.198']
 
 INSTALLED_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
     'cias.apps.CiasConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,7 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fcm_django',
 ]
+
+FCM_DJANGO_SETTINGS = {
+        "FCM_SERVER_KEY": "AAAArgVUrbk:APA91bF2q8OIMf4fVZbIXlrxpKSRrQMk39W-anL-BTWPh7_CUrhkasM9eYpSv-1nUA9yK_dhrHUWspVKK0ATKn6-zMvqL2QwhnNNkt9Y5KbTCPXJqEv1KSPbRuKLHTAyVqHmLbQ5Wuvg",
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':[
