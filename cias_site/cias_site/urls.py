@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import re_path, url
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
-    path('cias/', include('cias.urls')),
+#    path('cias/', include('cias.urls')),
+    url(r'^', include('cias.urls')),
 ]

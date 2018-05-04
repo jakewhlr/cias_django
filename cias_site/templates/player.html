@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>{{player_name}}</title>
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+	</head>
+	<body style="padding: 5px 10px;">
+		<h1><font face="helvetica">{{player_name}}</font></h1>
+		<div class="pure-g">
+				<div class="pure-u-1 pure-u-md-1-3">
+					<table class="pure-table">
+						<tbody>
+								<tr class="pure-table-odd">
+										<td>Player Name</td>
+										<td>{{player_name}}</td>
+								</tr>
+
+								<tr>
+										<td>Player ID</td>
+										<td>{{player_id}}</td>
+								</tr>
+								<tr class="pure-table-odd">
+										<td>Team</td>
+										<td>{{team}}</td>
+								</tr>
+
+								<tr>
+										<td>Hardware ID</td>
+										<td>{{hadware_id}}</td>
+								</tr>
+
+								<tr class="pure-table-odd">
+										<td>Emergency Contact</td>
+										<td>{{emergency_contact}}</td>
+								</tr>
+						</tbody>
+					</table>
+					<br>
+					<div class="pure-g">
+						<div class="pure-u-1 pure-u-md-1-3">
+							<a class="button-xlarge pure-button" href=/players/{{player_id}}/events/>Recent Impacts</a>
+						</div>
+						<div class="pure-u-1 pure-u-md-1-3">
+							<a class="button-xlarge pure-button" href="{{graph_link}}">Recent Impacts Graph</a>
+						</div>
+					</div>
+				</div>
+				<div class="pure-u-1 pure-u-md-1-3">
+					<img src="/static/placeholder_image.png"></img>
+				</div>
+			</div>
+	</body>
+</html>

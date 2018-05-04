@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>{{title}}</title>
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+		<style>
+			.button-xlarge {
+				font-size: 125%;
+			}
+		</style>
+	</head>
+	<body style="padding: 5px 10px;">
+    <label id="events"> </label>
+    <h1><font face="helvetica">{{title}}</font></h1>
+
+		<table class="pure-table">
+			<thead>
+					<tr>
+							<th>Player ID</th>
+							<th>Name</th>
+							<th>Team</th>
+					</tr>
+			</thead>
+			<tbody>
+		<script>
+      var event_array = {{event_links|safe}};
+      var info_array = {{event_info|safe}};
+
+      var index;
+      for (index = 0; index < event_array.length; ++index) {
+					var split_str = info_array[index].split(',');
+					if(index % 2 == 0){
+						document.write("<tr><td><a href=" + event_array[index] + ">" + split_str[0] + "</a></td><td><a href=" + event_array[index] + ">" + split_str[1] + "</a></td><td>" + split_str[2] + "</td></tr>");
+					}
+					else{
+						document.write("<tr class=\"pure-table-odd\"><td><a href=" + event_array[index] + ">" + split_str[0] + "</a></td><td><a href=" + event_array[index] + ">" + split_str[1] + "</a></td><td>" + split_str[2] + "</td></tr>");
+					}
+      }
+			document.write("</tbody></table>")
+    </script>
+	</body>
+</html>

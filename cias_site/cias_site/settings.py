@@ -25,7 +25,7 @@ SECRET_KEY = '#p(49jbqqgmf3ru!-%@f28p0kfq!y80e)m_ymk@h*a02m+ac6r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '35.227.155.198']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '35.227.155.198', 'whids.cse.unr.edu']
 
 
 # Application definition
@@ -68,7 +68,7 @@ ROOT_URLCONF = 'cias_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/srv/cias_site/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,3 +135,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/srv/cias_site/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+CSRF_COOKIE_SECURE = False

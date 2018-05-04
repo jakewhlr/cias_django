@@ -1,0 +1,247 @@
+<html>
+	<head>
+		<title>Impact Renderer</title>
+		<style>
+			body { margin: 10; }
+			canvas { width: 50%; height: 50%; border:1px solid #000000; }
+
+			* {
+			    box-sizing: border-box;
+			}
+
+			/* Create two equal columns that floats next to each other */
+			.column {
+			    float: left;
+			    width: 50%;
+			    padding: 10px;
+			}
+
+			/* Clear floats after the columns */
+			.row:after {
+			    content: "";
+			    display: table;
+			    clear: both;
+			}
+
+			/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+			@media screen and (max-width: 600px) {
+			    .column {
+			        width: 100%;
+			    }
+			}
+
+		</style>
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+	</head>
+	<body style="padding: 5px 10px;">
+
+		<div class="pure-g">
+		    <div class="pure-u-1 pure-u-md-1-3">
+					<h2><font face="helvetica">Event #{{event_number}}</font></h2>
+					<table class="pure-table">
+						<thead>
+								<tr>
+										<th>Event Info</th>
+										<th></th>
+								</tr>
+						</thead>
+						<tbody>
+								<tr class="pure-table-odd">
+										<td>Event #</td>
+										<td>{{event_number}}</td>
+								</tr>
+
+								<tr>
+										<td>Player</td>
+										<td><a href="/players/{{player_id}}">{{player}}</a></td>
+								</tr>
+								<tr class="pure-table-odd">
+										<td>Time</td>
+										<td>{{timestamp}}</td>
+								</tr>
+
+								<tr>
+										<td>G-Force</td>
+										<td>{{severity}}</td>
+								</tr>
+						</tbody>
+					</table>
+					<br>
+					<table class="pure-table">
+						<thead>
+								<tr>
+										<th>Sensor</th>
+										<th>Reading</th>
+								</tr>
+						</thead>
+						<tbody>
+								<tr class="pure-table-odd">
+										<td>1 Axis</td>
+										<td>{{axis_1}}</td>
+								</tr>
+						</tbody>
+					</table>
+					<br>
+					<table class="pure-table">
+						<thead>
+								<tr>
+										<th>Sensor</th>
+										<th>X</th>
+										<th>Y</th>
+										<th>Z</th>
+								</tr>
+						</thead>
+						<tbody>
+								<tr class="pure-table-odd">
+										<td>3 Axis</td>
+										<td>{{axis_3_x}}</td>
+										<td>{{axis_3_y}}</td>
+										<td>{{axis_3_z}}</td>
+								</tr>
+						</tbody>
+					</table>
+				</div>
+		    <div class="pure-u-1 pure-u-md-1-3">
+					<h2><font face="helvetica">Force Sensors</font></h2>
+					<table class="pure-table">
+				    <thead>
+				        <tr>
+				            <th>#</th>
+				            <th>Reading</th>
+				        </tr>
+				    </thead>
+
+				    <tbody>
+				        <tr class="pure-table-odd">
+				            <td>1</td>
+				            <td>{{force_1}}</td>
+				        </tr>
+
+				        <tr>
+				            <td>2</td>
+				            <td>{{force_2}}</td>
+				        </tr>
+								<tr class="pure-table-odd">
+				            <td>3</td>
+				            <td>{{force_4}}</td>
+				        </tr>
+
+				        <tr>
+				            <td>4</td>
+				            <td>{{force_4}}</td>
+				        </tr>
+								<tr class="pure-table-odd">
+										<td>5</td>
+										<td>{{force_5}}</td>
+								</tr>
+
+								<tr>
+										<td>6</td>
+										<td>{{force_6}}</td>
+								</tr>
+								<tr class="pure-table-odd">
+										<td>7</td>
+										<td>{{force_7}}</td>
+								</tr>
+
+								<tr>
+										<td>8</td>
+										<td>{{force_8}}</td>
+								</tr>
+								<tr class="pure-table-odd">
+										<td>9</td>
+										<td>{{force_9}}</td>
+								</tr>
+
+								<tr>
+										<td>10</td>
+										<td>{{force_10}}</td>
+								</tr>
+								<tr class="pure-table-odd">
+										<td>11</td>
+										<td>{{force_11}}</td>
+								</tr>
+
+								<tr>
+										<td>12</td>
+										<td>{{force_12}}</td>
+								</tr>
+				    </tbody>
+					</table>
+				</div>
+		</div>
+
+		<script src="/static/js/three.js"></script>
+		<script src="/static/js/OrbitControls.js"></script>
+		<script src="/static/js/SimplifyModifier.js"></script>
+
+		<script>
+				var camera, scene, renderer, controls;
+				var geometry, material, mesh;
+				var color;
+
+				init();
+				animate();
+
+				function init() {
+
+					camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+					controls = new THREE.OrbitControls(camera);
+					camera.position.set(1.5, 1.5, -3);
+					controls.update()
+
+					scene = new THREE.Scene();
+
+					var modifier = new THREE.SimplifyModifier();
+					var loader = new THREE.ObjectLoader();
+						loader.load("/static/3d/head.json",function ( obj ) {
+								geometry = obj.children[0].geometry;
+								var match = null;
+								for(var i = 0; i < geometry.faces.length; i++){
+									var face = geometry.faces[i];
+									if(i == 100){
+										face.color = new THREE.Color(0xFF0000);
+										match = face;
+										// console.log(geometry.faces[i].a);
+									}
+									else if(match && face.a == match.a | face.b == match.b | face.c == match.c){
+										face.color = new THREE.Color(0xFFFF00);
+										match = face;
+									}
+									else{
+										face.color = new THREE.Color(0xffffff);
+									}
+								}
+
+								var material = new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true, vertexColors: THREE.VertexColors, shininess: 0 } );
+								mesh = new THREE.Mesh( geometry, material );
+								mesh.position = (0,0,0);
+								mesh.rotation.x = Math.PI / 2;
+								mesh.rotation.y = Math.PI;
+								scene.add(mesh);
+					});
+
+					var light = new THREE.PointLight( 0x404040, 1, 1000 ); // soft white light
+					light.position.set(0, 2, 0);
+					camera.add( light );
+					scene.add(camera);
+
+					renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+					// renderer.setSize( window.innerWidth, window.innerHeight );
+					renderer.setSize( window.innerWidth - (window.innerWidth * 0.25), window.innerHeight - (window.innerHeight * 0.25) );
+					document.body.appendChild( renderer.domElement );
+
+				}
+
+				function animate() {
+
+					requestAnimationFrame( animate );
+					controls.update()
+					renderer.render(scene, camera);
+
+				}
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,40 @@
+{% block extrahead %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+$( document ).ready(function() {
+    var data = {
+        labels: {{ x_axis }},
+        datasets: [
+            {
+                fillColor: "rgba(96, 157, 255,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(0,0,0,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+		data: {{ ie_data }}
+            }
+        ]
+    };
+
+    var options = {
+      animation: false,
+      responsive: false
+    };
+
+    var ctx = document.getElementById("myChart").getContext("2d");
+    ctx.canvas.width = window.innerWidth * 0.9;
+    ctx.canvas.height = window.innerHeight * 0.9;
+    var myLineChart = new Chart(ctx).Line(data, options);
+
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- <div class="chart-container" style="position: relative; height:40px; width:80ps"> -->
+    <canvas id="myChart" style="height:800; width:400; position: absolute"></canvas>
+</div>
+{% endblock %}
